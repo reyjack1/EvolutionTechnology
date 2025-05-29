@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobre | Evolution Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff8c00;
+      --secondary: #222;
+      --bg: #f5f6fa;
+      --card-bg: #fff;
+      --accent: #f0f0f0;
+      --radius: 18px;
+      --shadow: 0 6px 32px rgba(0,0,0,0.08);
+      --gradient: linear-gradient(120deg, #ffb347 0%, #fffbe7 100%);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--secondary);
+      min-height: 100vh;
+      padding: 0;
+    }
+    header {
+      background-color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .barra-superior {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      font-weight: bold;
+      justify-content: center;
+      width: 100%;
+    }
+    .nav-links li { position: relative; }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 15px;
+      display: block;
+      font-size: 16px;
+      transition: color 0.3s, background-color 0.3s;
+      border-radius: 5px;
+    }
+    .nav-links a:hover {
+      background-color: #f0f0f0;
+      color: #ff8c00;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 180px;
+      z-index: 1;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      left: 0;
+      top: 100%;
+    }
+    .dropdown-content li a {
+      padding: 10px;
+      color: #333;
+    }
+    .dropdown:hover .dropdown-content,
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      cursor: pointer;
+      margin-left: 20px;
+      z-index: 102;
+    }
+    .hamburger {
+      width: 30px;
+      height: 3px;
+      background-color: #333;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.4s;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 18px 38px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+    .sobre-hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 38px;
+      background: var(--gradient);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 38px 42px 32px 42px;
+      position: relative;
+      overflow: hidden;
+      min-height: 270px;
+    }
+    .sobre-hero-texto {
+      flex: 2;
+      min-width: 240px;
+    }
+    .sobre-hero-titulo {
+      font-size: 2.15rem;
+      color: var(--primary);
+      margin-bottom: 18px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+    .sobre-hero-desc {
+      font-size: 1.16rem;
+      color: #333;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 8px;
+    }
+    .sobre-hero-imgbox {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+    }
+    .sobre-hero-img {
+      width: 158px;
+      height: 158px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.13);
+      background: #fff;
+    }
+
+    /* Cards */
+    .sobre-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 27px;
+    }
+    .sobre-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 28px 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      animation: fadeInUp 0.6s cubic-bezier(.23,1.05,.58,.99);
+    }
+
+    main img {
+      width: 100%;
+      max-width: 98vw;
+      height: auto;
+      display: block;
+      margin: 32px auto;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+    .sobre-card .card-title {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.18rem;
+      margin-bottom: 10px;
+      letter-spacing: .7px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sobre-card ul {
+      padding-left: 22px;
+      margin-top: 3px;
+    }
+    .sobre-card ul li {
+      margin-bottom: 7px;
+      color: #3b3838;
+      font-size: 1.06rem;
+      line-height: 1.6;
+    }
+    .sobre-card .premio {
+      font-size: 1.05rem;
+      background: #fffbe7;
+      border-left: 4px solid var(--primary);
+      padding: 8px 13px;
+      border-radius: 7px;
+      margin-bottom: 7px;
+      box-shadow: 0 2px 7px rgba(255,140,0,0.04);
+    }
+    .sobre-card .premio:last-child { margin-bottom: 0; }
+    .sobre-card .card-text {
+      font-size: 1.07rem;
+      color: #444;
+      margin-bottom: 4px;
+      line-height: 1.67;
+    }
+    .sobre-card .meta {
+      background: #f2f9ff;
+      border-left: 4px solid #1e90ff;
+      color: #0a2a4d;
+      padding: 8px 14px;
+      border-radius: 7px;
+      margin-bottom: 7px;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 7px rgba(30,144,255,0.04);
+    }
+    .sobre-card .meta:last-child { margin-bottom: 0; }
+    .sobre-card .bio-imgbox {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 12px 0 14px 0;
+    }
+    .sobre-card .bio-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ff8c00;
+      background: #fff;
+      box-shadow: 0 1px 7px rgba(0,0,0,0.08);
+    }
+    .sobre-card .bio-info {
+      flex: 1;
+      font-size: 1.04rem;
+      color: #444;
+      line-height: 1.6;
+    }
+    .sobre-card .bio-nome {
+      font-weight: bold;
+      color: #ff8c00;
+      font-size: 1.13rem;
+      margin-bottom: 3px;
+      letter-spacing: .6px;
+    }
+    /* Responsivo */
+    @media (max-width: 900px) {
+      .sobre-cards { grid-template-columns: 1fr; }
+      .sobre-hero { flex-direction: column; gap: 22px; padding: 24px 7vw 20px 7vw; }
+      .sobre-hero-img { width: 120px; height: 120px; }
+    }
+    @media (max-width: 700px) {
+      .sobre-hero { padding: 18px 2vw 16px 2vw; }
+      main { padding: 0 2vw 26px 2vw; }
+    }
+    @media (max-width: 540px) {
+      .sobre-hero-titulo { font-size: 1.2rem; }
+      .main-title, .sobre-hero-titulo { font-size: 1.18rem; }
+      .sobre-hero-desc { font-size: 0.96rem; }
+    }
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+        z-index: 102;
+      }
+      .nav-links {
+        flex-direction: column;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        background: #fff;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+        padding: 36px 0 12px 0;
+        text-align: center;
+        z-index: 101;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        width: 100%;
+        margin: 0;
+      }
+      .nav-links a {
+        width: 100%;
+        padding: 18px 0;
+        font-size: 18px;
+      }
+      .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        background: #fafafa;
+        margin-top: 0;
+      }
+      .dropdown:hover .dropdown-content,
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+    }
+    html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="barra-superior">
+      <nav aria-label="Menu principal">
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li class="dropdown">
+            <a href="#">Serviços</a>
+            <ul class="dropdown-content">
+              <li><a href="projetos.html">Projetos</a></li>
+              <li><a href="servti.html">Serviços T.I</a></li>
+              <li><a href="planos.html">Plano de negócios</a></li>
+              <li><a href="infra.html">Infraestrutura</a></li>
+            </ul>
+          </li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="menu-toggle" aria-label="Abrir menu" tabindex="0">
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    // Menu mobile toggle
+    $('.menu-toggle').on('click keypress', function(e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        $('.nav-links').toggleClass('active');
+      }
+    });
+    // Dropdown mobile toggle
+    $('.dropdown > a').on('click', function(e) {
+      if ($(window).width() <= 768) {
+        e.preventDefault();
+        $(this).parent().toggleClass('active');
+      }
+    });
+  </script>
+</body>
+</html>: 100vw;
+        background: #fff;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+        padding: 36px 0 12px 0;
+        text-align: center;
+        z-index: 101;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        width: 100%;
+        margin: 0;
+      }
+      .nav-links a {
+        width: 100%;
+        padding: 18px 0;
+        font-size: 18px;
+      }
+      .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        background: #fafafa;
+        margin-top: 0;
+      }
+      .dropdown:hover .dropdown-content,
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+    }
+    html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="barra-superior">
+      <nav aria-label="Menu principal">
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li class="dropdown">
+            <a href="#">Serviços</a>
+            <ul class="dropdown-content">
+              <li><a href="consultoria.html">Projetos</a></li>
+              <li><a href="infraestrutura.html">Serviços T.I</a></li>
+              <li><a href="seguranca.html">Plano de negócios</a></li>
+              <li><a href="suporte.html">Infraestrutura</a></li>
+            </ul>
+          </li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="menu-toggle" aria-label="Abrir menu" tabindex="0">
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="sobre-hero">
+      <div class="sobre-hero-texto">
+        <div class="sobre-hero-titulo">🏢 Sobre a Evolution Technology</div>
+        <div class="sobre-hero-desc">
+          <strong>Fundada em 2013</strong>, a Evolution Technology nasceu para transformar o cenário tecnológico do Brasil com soluções acessíveis, seguras e sob medida. Idealizada por <span style="color:#ff8c00;font-weight:600;">Juninho Malandrovisky</span>, a empresa sempre acreditou que tecnologia é uma ponte para o crescimento — não um obstáculo.
+        </div>
+        <div class="sobre-hero-desc" style="font-size:1.01rem;">
+          Começando em um pequeno escritório, a Evolution conquistou clientes com sua marca registrada: proximidade técnica, excelência operacional e soluções robustas que crescem junto com o negócio.<br>
+          Hoje, somos referência nacional em infraestrutura, segurança, consultoria técnica e projetos inteligentes.
+        </div>
+      </div>
+      <div class="sobre-hero-imgbox">
+        <img class="sobre-hero-img" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=facearea&w=400&h=400&q=80" alt="Equipe Evolution Technology">
+      </div>
+    </section>
+    <section class="sobre-cards">
+      <div class="sobre-card">
+        <div class="card-title">🌟 Nossa História</div>
+        <div class="card-text">
+          A Evolution nasceu da inquietação de <span style="color:#ff8c00;font-weight:600;">Juninho Malandrovisky</span>, que identificou a necessidade de unir tecnologia e estratégia.<br>
+          <br>
+          De três colaboradores em 2013 à atuação nacional, entregamos sempre proximidade, excelência e soluções que crescem junto com nossos clientes.
+        </div>
+      </div>
+      <div class="sobre-card">
+        <div class="card-title">🏆 Premiações e Reconhecimento</div>
+        <div class="premio">🏅 Prêmio Tech+ Inovação 2020 — Destaque em Soluções de Segurança Digital</div>
+        <div class="premio">🏅 Top Empresa de Consultoria T.I 2021 – ABINFO</div>
+        <div class="premio">🏅 Case de Excelência em Transformação Digital 2022 – Revista CIO Brasil</div>
+        <div class="premio">🏅 Finalista em StartTech Summit 2019 — Automação de infraestrutura para PMEs</div>
+        <div class="card-text" style="margin-top:10px;">
+          Esses marcos refletem nossa cultura de melhoria contínua, valorização de talentos e compromisso com resultados reais.
+        </div>
+      </div>
+      <div class="sobre-card">
+        <div class="card-title">🚀 Nossas Metas Futuras</div>
+        <div class="meta">Expandir para América Latina até 2027</div>
+        <div class="meta">Criar ecossistema de produtos próprios em automação e segurança</div>
+        <div class="meta">Investir em programas gratuitos para jovens em áreas vulneráveis</div>
+        <div class="meta">Ser referência nacional em IaaS para pequenas e médias empresas</div>
+      </div>
+      <div class="sobre-card">
+        <div class="card-title">👨‍💻 Biografia do Fundador</div>
+        <div class="bio-imgbox">
+          <img class="bio-img" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juninho Malandrovisky">
+          <div class="bio-info">
+            <div class="bio-nome"><span style="color:#ff8c00;font-weight:600;">Juninho Malandrovisky</span><br><span style="color:#767676;font-weight:400;font-size:0.97rem;">Fundador & CTO</span></div>
+            <div>
+              Apaixonado por tecnologia desde os 12 anos, Juninho superou desafios com aprendizado autodidata e muita prática. Fundou a Evolution para democratizar a tecnologia e transformar pequenas empresas em líderes digitais.
+            </div>
+          </div>
+        </div>
+        <div class="card-text">
+          Hoje, além de liderar projetos complexos, Juninho ministra palestras sobre inovação, segurança digital e inclusão tecnológica, inspirando a próxima geração de talentos.
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    // Menu mobile toggle
+    $('.menu-toggle').on('click keypress', function(e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        $('.nav-links').toggleClass('active');
+      }
+    });
+    // Dropdown mobile toggle
+    $('.dropdown > a').on('click', function(e) {
+      if ($(window).width() <= 768) {
+        e.preventDefault();
+        $(this).parent().toggleClass('active');
+      }
+    });
+  </script>
+</body>
+</html>

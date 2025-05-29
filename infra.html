@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Infraestrutura de T.I | Evolution Technology</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
+            color: #333;
+            padding: 0;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .barra-superior {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            font-weight: bold;
+            justify-content: center;
+            width: 100%;
+        }
+        .nav-links li { position: relative; }
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            font-size: 16px;
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 5px;
+        }
+        .nav-links a:hover {
+            background-color: #f0f0f0;
+            color: #ff8c00;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 180px;
+            z-index: 1;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            left: 0;
+            top: 100%;
+        }
+        .dropdown-content li a {
+            padding: 10px;
+            color: #333;
+        }
+        .dropdown:hover .dropdown-content,
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            cursor: pointer;
+            margin-left: 20px;
+            z-index: 102;
+        }
+        .hamburger {
+            width: 30px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: 0.4s;
+        }
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            padding: 38px 20px 40px 20px;
+            margin-bottom: 30px;
+        }
+        .main-title {
+            color: #ff8c00;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .intro {
+            margin-bottom: 26px;
+            font-size: 1.13rem;
+            color: #555;
+        }
+        .category {
+            font-size: 1.13rem;
+            margin-top: 32px;
+            margin-bottom: 13px;
+            color: #454545;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            letter-spacing: 0.5px;
+        }
+        .section-list {
+            margin-bottom: 18px;
+        }
+        .section-item {
+            background: #fff9f1;
+            border-left: 4px solid #ff8c00;
+            padding: 13px 17px;
+            border-radius: 7px;
+            color: #444;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(255,140,0,0.03);
+            transition: box-shadow 0.18s;
+            font-size: 1.03rem;
+        }
+        .section-item strong {
+            color: #ff8c00;
+            font-weight: bold;
+        }
+        .resultados-titulo {
+            font-size: 1.14rem;
+            margin-top: 32px;
+            margin-bottom: 7px;
+            color: #454545;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .diferenciais-list {
+            margin-top: 18px;
+            margin-bottom: 0;
+            padding-left: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            list-style: none;
+        }
+        .diferencial {
+            flex: 1 1 290px;
+            background: #fffbe7;
+            border-left: 4px solid #ff8c00;
+            border-radius: 7px;
+            color: #444;
+            padding: 12px 17px;
+            margin-bottom: 0;
+            font-size: 1.04rem;
+            box-shadow: 0 2px 8px rgba(255,140,0,0.03);
+        }
+        @media (max-width: 900px) {
+            main { padding: 22px 3vw; }
+        }
+        @media (max-width: 768px) {
+            header {
+                flex-direction: row;
+                padding: 8px 0;
+            }
+            .barra-superior {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 8px;
+                position: relative;
+            }
+            .menu-toggle {
+                display: flex;
+                z-index: 102;
+            }
+            .nav-links {
+                flex-direction: column;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100vw;
+                background: #fff;
+                box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+                padding: 36px 0 12px 0;
+                text-align: center;
+                z-index: 101;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links li {
+                width: 100%;
+                margin: 0;
+            }
+            .nav-links a {
+                width: 100%;
+                padding: 18px 0;
+                font-size: 18px;
+            }
+            .dropdown-content {
+                position: static;
+                display: none;
+                width: 100%;
+                box-shadow: none;
+                background: #fafafa;
+                margin-top: 0;
+            }
+            .dropdown:hover .dropdown-content,
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+            .diferenciais-list {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        @media (max-width: 600px) {
+            main { padding: 11px 2vw; }
+            .main-title { font-size: 1.3rem; }
+        }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="barra-superior">
+            <nav aria-label="Menu principal">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li class="dropdown">
+                        <a href="#">Serviços</a>
+                        <ul class="dropdown-content">
+                            <li><a href="projetos.html">Projetos</a></li>
+                            <li><a href="servti.html">Serviços T.I</a></li>
+                            <li><a href="planos.html">Plano de negócios</a></li>
+                            <li><a href="infra.html">Infraestrutura</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="portfolio.html">Portfólio</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" aria-label="Abrir menu" tabindex="0">
+                <div class="hamburger"></div>
+                <div class="hamburger"></div>
+                <div class="hamburger"></div>
+            </div>
+        </div>
+    </header>
+   
+    <main>
+        <div class="main-title">🏗️ Infraestrutura de T.I</div>
+        <div class="intro">
+            Projetamos ambientes tecnológicos sólidos, seguros e escaláveis.<br>
+            Cuidamos da base para que a sua empresa cresça com estabilidade, segurança e desempenho. A Evolution Technology entrega infraestrutura de T.I com arquitetura personalizada, suporte contínuo e foco em performance.
+        </div>
+
+        <div class="category">⚙️ O que entregamos</div>
+
+        <div class="category" style="font-size:1.07rem; margin-bottom:6px; margin-top:18px;">🧱 Planejamento e Implantação de Redes</div>
+        <div class="section-list">
+            <div class="section-item">Estruturação de redes cabeadas e Wi-Fi com alta disponibilidade</div>
+            <div class="section-item">Organização física e lógica de racks, switches, roteadores e servidores</div>
+            <div class="section-item">Topologia adaptada ao tamanho e crescimento do negócio</div>
+            <div class="section-item">Monitoramento e controle de tráfego de rede</div>
+        </div>
+
+        <div class="category" style="font-size:1.07rem; margin-bottom:6px; margin-top:18px;">🖥️ Servidores e Virtualização</div>
+        <div class="section-list">
+            <div class="section-item">Implantação de servidores Linux e Windows otimizados</div>
+            <div class="section-item">Virtualização com VMware, Proxmox ou Hyper-V</div>
+            <div class="section-item">Ambientes preparados para backups, aplicações web e sistemas internos</div>
+            <div class="section-item">Alta disponibilidade e redundância para serviços críticos</div>
+        </div>
+
+        <div class="category" style="font-size:1.07rem; margin-bottom:6px; margin-top:18px;">🔐 Segurança Estrutural</div>
+        <div class="section-list">
+            <div class="section-item">Firewall físico e lógico com políticas personalizadas</div>
+            <div class="section-item">VLANs e segmentação de rede para maior proteção de dados</div>
+            <div class="section-item">VPNs para acesso remoto seguro</div>
+            <div class="section-item">Controle de acesso, autenticação e permissões avançadas</div>
+        </div>
+
+        <div class="category" style="font-size:1.07rem; margin-bottom:6px; margin-top:18px;">☁️ Ambientes Híbridos e Cloud</div>
+        <div class="section-list">
+            <div class="section-item">Integração entre servidores locais e serviços em nuvem (AWS, Azure, Google Cloud)</div>
+            <div class="section-item">Migração de dados e aplicações para ambientes cloud</div>
+            <div class="section-item">Redução de custos com soluções sob demanda e escaláveis</div>
+            <div class="section-item">Monitoramento de performance e consumo de recursos</div>
+        </div>
+
+        <div class="category" style="font-size:1.07rem; margin-bottom:6px; margin-top:18px;">🔄 Manutenção e Monitoramento</div>
+        <div class="section-list">
+            <div class="section-item">Monitoramento proativo de rede e servidores 24h</div>
+            <div class="section-item">Alertas em tempo real e diagnóstico remoto</div>
+            <div class="section-item">Gestão de atualizações, patches de segurança e otimizações</div>
+            <div class="section-item">Inventário técnico automatizado com documentação</div>
+        </div>
+
+        <div class="resultados-titulo">🔧 Resultados esperados:</div>
+        <div class="section-list">
+            <div class="section-item">Redução de falhas técnicas, aumento da performance, maior controle da rede e segurança reforçada. Tudo estruturado para crescer junto com a sua empresa.</div>
+        </div>
+
+        <div class="category" style="font-size:1.09rem; margin-bottom:6px; margin-top:18px;">✅ Diferenciais da Evolution Technology</div>
+        <ul class="diferenciais-list">
+            <li class="diferencial">Infraestrutura sob medida para cada ambiente empresarial</li>
+            <li class="diferencial">Equipe especializada em redes, servidores e virtualização</li>
+            <li class="diferencial">Suporte contínuo e atendimento personalizado</li>
+            <li class="diferencial">Soluções alinhadas às boas práticas e normas técnicas</li>
+        </ul>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+    // Menu mobile toggle
+    $('.menu-toggle').on('click keypress', function(e) {
+        if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+            $('.nav-links').toggleClass('active');
+        }
+    });
+    // Dropdown mobile toggle
+    $('.dropdown > a').on('click', function(e) {
+        if ($(window).width() <= 768) {
+            e.preventDefault();
+            $(this).parent().toggleClass('active');
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog | Evolution Technology</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff8c00;
+      --secondary: #222;
+      --bg: #f5f6fa;
+      --card-bg: #fff;
+      --accent: #f0f0f0;
+      --radius: 18px;
+      --shadow: 0 6px 32px rgba(0,0,0,0.08);
+      --gradient: linear-gradient(120deg, #ffb347 0%, #fffbe7 100%);
+      --tab-bg: #fff8ee;
+      --tab-active: #ff8c00;
+      --tab-inactive: #ffd9ae;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--secondary);
+      min-height: 100vh;
+      padding: 0;
+    }
+    header {
+      background-color: #fff;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    .barra-superior {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      font-weight: bold;
+      justify-content: center;
+      width: 100%;
+    }
+    .nav-links li { position: relative; }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      padding: 10px 15px;
+      display: block;
+      font-size: 16px;
+      transition: color 0.3s, background-color 0.3s;
+      border-radius: 5px;
+    }
+    .nav-links a:hover {
+      background-color: #f0f0f0;
+      color: #ff8c00;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 180px;
+      z-index: 1;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      left: 0;
+      top: 100%;
+    }
+    .dropdown-content li a {
+      padding: 10px;
+      color: #333;
+    }
+    .dropdown:hover .dropdown-content,
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      cursor: pointer;
+      margin-left: 20px;
+      z-index: 102;
+    }
+    .hamburger {
+      width: 30px;
+      height: 3px;
+      background-color: #333;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.4s;
+    }
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: flex;
+        z-index: 102;
+      }
+      .nav-links {
+        flex-direction: column;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100vw;
+        background: #fff;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+        padding: 36px 0 12px 0;
+        text-align: center;
+        z-index: 101;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .nav-links li {
+        width: 100%;
+        margin: 0;
+      }
+      .nav-links a {
+        width: 100%;
+        padding: 18px 0;
+        font-size: 18px;
+      }
+      .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        background: #fafafa;
+        margin-top: 0;
+      }
+      .dropdown:hover .dropdown-content,
+      .dropdown.active .dropdown-content {
+        display: block;
+      }
+    }
+    html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
+
+    /* BLOG DESIGN */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 8px 38px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+    }
+    .blog-tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--tab-bg);
+      border-radius: 12px;
+      margin: 24px 0 20px 0;
+      padding: 4px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .blog-tab {
+      border: none;
+      background: var(--tab-inactive);
+      color: #995800;
+      font-weight: 600;
+      font-size: 1.07rem;
+      padding: 9px 26px;
+      border-radius: 10px;
+      cursor: pointer;
+      outline: none;
+      margin: 0 2px;
+      transition: background 0.18s, color 0.18s;
+      box-shadow: 0 2px 7px rgba(255,140,0,0.03);
+    }
+    .blog-tab.active {
+      background: var(--tab-active);
+      color: #fff;
+    }
+    .blog-feed {
+      margin: 0 auto;
+      width: 100%;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .blog-post {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 30px 28px 16px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      position: relative;
+    }
+    .blog-post .post-author {
+      font-size: 1.02rem;
+      color: #ff8c00;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .blog-post .post-date {
+      font-size: 0.93rem;
+      color: #888;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .blog-post .post-title {
+      font-size: 1.32rem;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 6px;
+      line-height: 1.2;
+      letter-spacing: .4px;
+    }
+    .blog-post .post-image {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      margin-bottom: 10px;
+      border-radius: 9px;
+      box-shadow: 0 2px 14px rgba(255,140,0,0.09);
+    }
+    .blog-post .post-content {
+      font-size: 1.06rem;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 7px;
+    }
+    .blog-post .post-tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 11px;
+      flex-wrap: wrap;
+    }
+    .blog-post .post-tag {
+      background: #ffe0b8;
+      color: #b06d00;
+      font-size: 0.92rem;
+      padding: 4px 11px;
+      border-radius: 7px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      display: inline-block;
+    }
+    /* Comentários */
+    .comments-section {
+      background: #f8f8f8;
+      border-radius: 10px;
+      padding: 10px 14px 12px 14px;
+      margin-top: 13px;
+    }
+    .comments-section h4 {
+      color: #ff8c00;
+      font-size: 1.07rem;
+      margin-bottom: 7px;
+      margin-top: 0;
+    }
+    .comment {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .comment:last-child { margin-bottom: 0; }
+    .comment-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ececec;
+      border: 2px solid #ffd9ae;
+    }
+    .comment-body {
+      background: #fff;
+      border-radius: 9px;
+      padding: 7px 12px;
+      box-shadow: 0 1px 5px rgba(30,32,40,0.03);
+      font-size: 1.01rem;
+      color: #333;
+      flex: 1;
+    }
+    .comment-author {
+      font-weight: 600;
+      color: #ff8c00;
+      font-size: 0.97rem;
+    }
+    .comment-date {
+      color: #aaa;
+      font-size: 0.87rem;
+      font-weight: 400;
+      margin-left: 7px;
+    }
+    .comment-form {
+      display: flex;
+      margin-top: 9px;
+      gap: 8px;
+      align-items: center;
+    }
+    .comment-form input[type="text"] {
+      flex: 1;
+      padding: 7px 10px;
+      border: 1.5px solid #ffd9ae;
+      border-radius: 7px;
+      font-size: 1.03rem;
+      outline: none;
+      background: #fff;
+      color: #222;
+      transition: border 0.17s;
+    }
+    .comment-form input[type="text"]:focus {
+      border-color: #ff8c00;
+    }
+    .comment-form button {
+      background: #ff8c00;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 7px 15px;
+      font-weight: 600;
+      font-size: 1.04rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .comment-form button:hover {
+      background: #b06d00;
+    }
+    @media (max-width: 900px) {
+      main { padding: 0 2vw 26px 2vw; }
+      .blog-post { padding: 20px 10px 10px 10px; }
+    }
+    @media (max-width: 540px) {
+      .blog-post .post-title { font-size: 1.02rem; }
+      .blog-tab { font-size: 0.98rem; padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="barra-superior">
+      <nav aria-label="Menu principal">
+        <ul class="nav-links">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li class="dropdown">
+            <a href="#">Serviços</a>
+            <ul class="dropdown-content">
+              <li><a href="projetos.html">Projetos</a></li>
+              <li><a href="servti.html">Serviços T.I</a></li>
+              <li><a href="planos.html">Plano de negócios</a></li>
+              <li><a href="infra.html">Infraestrutura</a></li>
+            </ul>
+          </li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="menu-toggle" aria-label="Abrir menu" tabindex="0">
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+        <div class="hamburger"></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="blog-tabs" id="blog-tabs"></div>
+    <div class="blog-feed" id="blog-feed"></div>
+  </main>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    // Menu mobile toggle
+    $('.menu-toggle').on('click keypress', function(e) {
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        $('.nav-links').toggleClass('active');
+      }
+    });
+    $('.dropdown > a').on('click', function(e) {
+      if ($(window).width() <= 768) {
+        e.preventDefault();
+        $(this).parent().toggleClass('active');
+      }
+    });
+
+    // BLOG DATA
+    const blogTabs = [
+      { key: "tendencias", label: "Tendências" },
+      { key: "seguranca", label: "Segurança" },
+      { key: "cloud", label: "Cloud" },
+      { key: "inteligencia", label: "Inteligência Artificial" },
+      { key: "programacao", label: "Programação" }
+    ];
+    const blogPosts = [
+      {
+        tab: "tendencias",
+        author: "Luan Barbosa",
+        avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+        date: "2025-05-28",
+        title: "As 5 maiores tendências de tecnologia para 2025",
+        image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80",
+        content: "Está preparado para as novidades? Veja como IA generativa, computação quântica e dispositivos vestíveis vão transformar o mercado nos próximos meses.",
+        tags: ["Tendências", "Futuro", "Inovação"]
+      },
+      {
+        tab: "seguranca",
+        author: "Carlos Lima",
+        avatar: "https://randomuser.me/api/portraits/men/66.jpg",
+        date: "2025-05-26",
+        title: "Como proteger seus dados em tempos de ataques sofisticados",
+        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+        content: "Ataques de ransomware e phishing estão mais inteligentes. Aprenda práticas essenciais de segurança digital para empresas e usuários.",
+        tags: ["Segurança", "Privacidade", "Dicas"]
+      },
+      {
+        tab: "cloud",
+        author: "Ana Souza",
+        avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+        date: "2025-05-19",
+        title: "Cloud híbrida: por que é tendência nas médias empresas?",
+        image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80",
+        content: "A nuvem híbrida oferece flexibilidade, economia e segurança. Descubra como adotar e quais os principais fornecedores do mercado.",
+        tags: ["Cloud", "Infraestrutura", "Negócios"]
+      },
+      {
+        tab: "inteligencia",
+        author: "Marina Teles",
+        avatar: "https://randomuser.me/api/portraits/women/46.jpg",
+        date: "2025-05-21",
+        title: "IA Generativa na prática: exemplos reais para empresas",
+        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+        content: "Veja como empresas brasileiras estão inovando usando IA para atendimento, automação de processos e análise de dados.",
+        tags: ["IA", "Automação", "Casos de Sucesso"]
+      },
+      {
+        tab: "programacao",
+        author: "Pedro Henrique",
+        avatar: "https://randomuser.me/api/portraits/men/84.jpg",
+        date: "2025-05-12",
+        title: "O que mudou no JavaScript em 2025? Novas features e dicas",
+        image: "https://images.unsplash.com/photo-1465101178521-c1a9136a3d21?auto=format&fit=crop&w=800&q=80",
+        content: "JavaScript não para de evoluir! Descubra as principais novidades do ECMAScript 2025 e como usá-las nos seus projetos.",
+        tags: ["JavaScript", "Desenvolvimento", "Novidades"]
+      }
+    ];
+
+    // Simulação de comentários (armazenados no localStorage por post)
+    function getComments(postIdx) {
+      const comments = localStorage.getItem('blogComments_' + postIdx);
+      return comments ? JSON.parse(comments) : [];
+    }
+    function saveComment(postIdx, comment) {
+      const comments = getComments(postIdx);
+      comments.push(comment);
+      localStorage.setItem('blogComments_' + postIdx, JSON.stringify(comments));
+    }
+
+    // Renderização das abas
+    function renderTabs(activeTab = "tendencias") {
+      const tabEl = document.getElementById('blog-tabs');
+      tabEl.innerHTML = "";
+      blogTabs.forEach(tab => {
+        const btn = document.createElement('button');
+        btn.className = 'blog-tab' + (tab.key === activeTab ? ' active' : '');
+        btn.textContent = tab.label;
+        btn.onclick = () => {
+          renderTabs(tab.key);
+          renderFeed(tab.key);
+        };
+        tabEl.appendChild(btn);
+      });
+    }
+
+    // Renderização dos posts
+    function renderFeed(activeTab = "tendencias") {
+      const feedEl = document.getElementById('blog-feed');
+      feedEl.innerHTML = "";
+      blogPosts
+        .map((p, i) => ({...p, idx: i}))
+        .filter(p => p.tab === activeTab)
+        .forEach(post => {
+          const postDiv = document.createElement('div');
+          postDiv.className = "blog-post";
+          postDiv.innerHTML = `
+            <div class="post-author"><img src="${post.avatar}" style="width:22px;height:22px;border-radius:50%;vertical-align:middle;margin-right:7px;">${post.author}</div>
+            <div class="post-date">${new Date(post.date).toLocaleDateString()}</div>
+            <div class="post-title">${post.title}</div>
+            <img class="post-image" src="${post.image}" alt="${post.title}">
+            <div class="post-content">${post.content}</div>
+            <div class="post-tags">${post.tags.map(t => `<span class="post-tag">${t}</span>`).join('')}</div>
+            <div class="comments-section" data-post="${post.idx}">
+              <h4>Comentários</h4>
+              <div class="comments-list"></div>
+              <form class="comment-form">
+                <input type="text" placeholder="Escreva um comentário..." maxlength="200" required>
+                <button type="submit">Comentar</button>
+              </form>
+            </div>
+          `;
+          feedEl.appendChild(postDiv);
+          renderComments(post.idx);
+        });
+    }
+
+    // Renderizar comentários
+    function renderComments(postIdx) {
+      const container = document.querySelector(`.comments-section[data-post="${postIdx}"] .comments-list`);
+      if (!container) return;
+      const comments = getComments(postIdx);
+      container.innerHTML = comments.length === 0 ? '<span style="color:#aaa;font-size:.97rem;">Seja o primeiro a comentar!</span>' : "";
+      comments.forEach(c => {
+        container.innerHTML += `
+        <div class="comment">
+          <img class="comment-avatar" src="${c.avatar}" alt="${c.name}">
+          <div class="comment-body">
+            <span class="comment-author">${c.name}</span>
+            <span class="comment-date">${new Date(c.date).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span><br>
+            ${c.text}
+          </div>
+        </div>`;
+      });
+    }
+
+    // Handler de comentários
+    document.addEventListener('submit', function(e) {
+      if (e.target.classList.contains('comment-form')) {
+        e.preventDefault();
+        const section = e.target.closest('.comments-section');
+        const postIdx = section.getAttribute('data-post');
+        const input = e.target.querySelector('input[type="text"]');
+        const text = input.value.trim();
+        if (!text) return;
+        // Avatar e nome fake para demo
+        const fakeNames = ["Lucas", "Maria", "João", "Amanda", "Rafael", "Letícia"];
+        const fakeAvatars = [
+          "https://randomuser.me/api/portraits/men/8.jpg",
+          "https://randomuser.me/api/portraits/women/9.jpg",
+          "https://randomuser.me/api/portraits/men/14.jpg",
+          "https://randomuser.me/api/portraits/women/21.jpg"
+        ];
+        const name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+        const avatar = fakeAvatars[Math.floor(Math.random() * fakeAvatars.length)];
+        saveComment(postIdx, { name, avatar, text, date: new Date() });
+        input.value = "";
+        renderComments(postIdx);
+      }
+    });
+
+    // Inicialização
+    renderTabs();
+    renderFeed();
+  </script>
+</body>
+</html>
